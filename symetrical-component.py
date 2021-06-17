@@ -97,7 +97,7 @@ ax.set_xlim(-1.1*max_lim, 1.1*max_lim)
 ax.set_ylim(-1.1*max_lim, 1.1*max_lim)
 ax.set_xlabel("Real axis")
 ax.set_ylabel("Imaginary axis")
-ax.set_title("Symmetrical Components Phasor plot")
+ax.set_title("Phasors Plot of Symmetrical Components")
 plt.legend(frameon=False)
 
 
