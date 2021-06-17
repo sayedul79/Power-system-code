@@ -54,17 +54,17 @@ all_components=np.array([[Va_zero, Vb_zero, Vc_zero],
 print(np.around(all_components, 3))
 #Original unbalanced 3-phase vector plot
 fig,ax=plt.subplots()
-ax.quiver(0, 0, unbalanced[0].real, unbalanced[0].imag, color="red", 
+ax.quiver(0, 0, unbalanced[0].real, unbalanced[0].imag, color="orange", 
           scale_units="xy", 
           angles="xy", 
           scale=1, 
           label="Phase A")
-ax.quiver(0, 0, unbalanced[1].real, unbalanced[1].imag, color="blue", 
+ax.quiver(0, 0, unbalanced[1].real, unbalanced[1].imag, color="m", 
           scale_units="xy",
           angles="xy",
           scale=1, 
           label="Phase B")
-ax.quiver(0, 0, unbalanced[2].real, unbalanced[2].imag, color="green",
+ax.quiver(0, 0, unbalanced[2].real, unbalanced[2].imag, color="black",
           scale_units="xy",
           angles="xy",
           scale=1, 
