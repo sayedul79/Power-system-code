@@ -15,7 +15,7 @@ angle_B=float(input("Enter angle of phase B (degree) :"))
 magnitude_C=float(input("Enter magnitude of phase C :"))
 angle_C=float(input("Enter angle of phase C (degree) :"))
 
-#phasot to cartesian conversion
+#phasor to cartesian conversion
 def phasor2cart(r, theta):
     theta_rad=(np.pi/180)*theta
     return r*np.exp(1j*theta_rad)
@@ -47,19 +47,57 @@ Vb_neg=a*Va_neg
 Vc_zero=Va_zero
 Vc_pos=a*Va_pos
 Vc_neg=a**2*Va_neg
-#define vector plot function
-def vector_plot(x_start, y_start, x_end, y_end, color):
-    x_round=np.around(x_end, 3)
-    y_round=np.around(y_end, 3)
-    plt.quiver(0, 0,x_round, y_round, color=color, scale_units="xy", angles="xy", scale=1)
-    plt.xlim(np.min(unbalanced.real),np.max(unbalanced.real))
-    plt.ylim(np.min(unbalanced.imag),np.max(unbalanced.imag))
-
+    
 all_components=np.array([[Va_zero, Vb_zero, Vc_zero], 
                          [Va_pos, Vb_pos, Vc_pos], 
                          [Va_neg, Vb_neg, Vc_neg]])
 print(np.around(all_components, 3))
 #Original unbalanced 3-phase vector plot
-vector_plot(0, 0, unbalanced[0].real, unbalanced[0].imag, "red")
-vector_plot(0, 0, unbalanced[1].real, unbalanced[1].imag, "blue")
-vector_plot(0, 0, unbalanced[2].real, unbalanced[2].imag, "green")
+fig,ax=plt.subplots()
+ax.quiver(0, 0, unbalanced[0].real, unbalanced[0].imag, color="red", 
+          scale_units="xy", 
+          angles="xy", 
+          scale=1, 
+          label="Phase A")
+ax.quiver(0, 0, unbalanced[1].real, unbalanced[1].imag, color="blue", 
+          scale_units="xy",
+          angles="xy",
+          scale=1, 
+          label="Phase B")
+ax.quiver(0, 0, unbalanced[2].real, unbalanced[2].imag, color="green",
+          scale_units="xy",
+          angles="xy",
+          scale=1, 
+          label="Phase C")
+# Phase A symmetrical components plot
+ax.quiver(0,0,Va_pos.real, Va_pos.imag, scale_units="xy", 
+          angles="xy", scale=1, color="red")
+ax.quiver(Va_pos.real,Va_pos.imag,Va_neg.real, Va_neg.imag, scale_units="xy", 
+          angles="xy", scale=1, color="red")
+ax.quiver(Va_pos.real+Va_neg.real,Va_pos.imag+Va_neg.imag,Va_zero.real, Va_zero.imag, scale_units="xy", 
+          angles="xy", scale=1, color="red")
+# Phase B symmetrical components plot
+ax.quiver(0,0,Vb_pos.real, Vb_pos.imag, scale_units="xy", 
+          angles="xy", scale=1, color="blue")
+ax.quiver(Vb_pos.real,Vb_pos.imag,Vb_neg.real, Vb_neg.imag, scale_units="xy", 
+          angles="xy", scale=1, color="blue")
+ax.quiver(Vb_pos.real+Vb_neg.real,Vb_pos.imag+Vb_neg.imag,Vb_zero.real, Vb_zero.imag, scale_units="xy", 
+          angles="xy", scale=1, color="blue")
+# Phase C symmetrical components plot
+ax.quiver(0,0,Vc_pos.real, Vc_pos.imag, scale_units="xy", 
+          angles="xy", scale=1, color="green")
+ax.quiver(Vc_pos.real,Vc_pos.imag,Vc_neg.real, Vc_neg.imag, scale_units="xy", 
+          angles="xy", scale=1, color="green")
+ax.quiver(Vc_pos.real+Vc_neg.real,Vc_pos.imag+Vc_neg.imag,Vc_zero.real, Vc_zero.imag, scale_units="xy", 
+          angles="xy", scale=1, color="green")
+ 
+
+max_lim=np.abs(unbalanced).max()
+ax.set_xlim(-1.1*max_lim, 1.1*max_lim)
+ax.set_ylim(-1.1*max_lim, 1.1*max_lim)
+ax.set_xlabel("Real axis")
+ax.set_ylabel("Imaginary axis")
+ax.set_title("Symmetrical Components Phasor plot")
+plt.legend(frameon=False)
+
+
